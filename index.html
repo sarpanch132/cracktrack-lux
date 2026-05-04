@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrackTrack - Self Improvement & Exam Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    :root{
+      --bg:#080B12;
+      --card:#111827;
+      --card2:#0F172A;
+      --text:#F8FAFC;
+      --muted:#94A3B8;
+      --accent:#38BDF8;
+      --accent2:#A78BFA;
+      --green:#22C55E;
+      --yellow:#FACC15;
+      --red:#EF4444;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(167,139,250,.18), transparent 34%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .app{max-width:1200px;margin:0 auto;padding:24px}
+    header{
+      display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px;
+    }
+    .brand h1{margin:0;font-size:30px;letter-spacing:-.8px}
+    .brand p{margin:6px 0 0;color:var(--muted)}
+    .pill{
+      border:1px solid var(--border);background:rgba(255,255,255,.06);
+      padding:10px 14px;border-radius:999px;color:var(--muted);font-size:14px;
+    }
+    .grid{display:grid;gap:16px}
+    .stats{grid-template-columns:repeat(4,1fr)}
+    .main{grid-template-columns:1.15fr .85fr;margin-top:16px}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.065), rgba(255,255,255,.025));
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      backdrop-filter:blur(16px);
+    }
+    .stat .label{color:var(--muted);font-size:13px}
+    .stat .value{font-size:30px;font-weight:800;margin-top:6px}
+    .stat .sub{color:var(--muted);font-size:12px;margin-top:4px}
+    h2{font-size:18px;margin:0 0 14px}
+    h3{font-size:15px;margin:0 0 10px;color:#CBD5E1}
+    input,select,textarea,button{
+      width:100%;
+      border:1px solid var(--border);
+      background:rgba(15,23,42,.85);
+      color:var(--text);
+      border-radius:14px;
+      padding:12px;
+      font:inherit;
+      outline:none;
+    }
+    textarea{min-height:88px;resize:vertical}
+    button{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border:0;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s transform,.2s opacity;
+    }
+    button:hover{transform:translateY(-1px);opacity:.96}
+    .secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text)}
+    .danger{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.35);color:#FECACA}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .space{height:12px}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .tab{
+      width:auto;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.06);
+      border:1px solid var(--border);font-weight:700;color:#CBD5E1;
+    }
+    .tab.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#06101F}
+    .list{display:flex;flex-direction:column;gap:10px;max-height:420px;overflow:auto;padding-right:2px}
+    .item{
+      background:rgba(15,23,42,.75);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+    }
+    .itemTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .itemTitle{font-weight:800}
+    .itemMeta{color:var(--muted);font-size:12px;margin-top:4px}
+    .tag{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.22);color:#BAE6FD;white-space:nowrap}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    .actions button{padding:8px 10px;border-radius:11px;font-size:13px}
+    .progressWrap{height:11px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden;margin-top:10px}
+    .progress{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));width:0%}
+    .habitGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .habitBox{
+      padding:10px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.04);
+      text-align:center;cursor:pointer;user-select:none;
+    }
+    .habitBox.done{background:rgba(34,197,94,.17);border-color:rgba(34,197,94,.35)}
+    .quote{color:#CBD5E1;line-height:1.5}
+    .small{font-size:12px;color:var(--muted)}
+    .footer{color:var(--muted);font-size:12px;text-align:center;margin:22px 0 0}
+    @media(max-width:850px){
+      .stats,.main{grid-template-columns:1fr}
+      .row,.row3,.habitGrid{grid-template-columns:1fr}
+      header{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <h1>CrackTrack</h1>
+        <p>Your personal tracker for Punjab Excise Inspector prep + self-improvement.</p>
+      </div>
+      <div class="pill" id="examCountdown">Exam countdown</div>
+    </header>
+
+    <section class="grid stats">
+      <div class="card stat">
+        <div class="label">Today Study</div>
+        <div class="value" id="todayHours">0h</div>
+        <div class="sub">Goal: 7h daily</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Tasks Completed</div>
+        <div class="value" id="tasksDone">0/0</div>
+        <div class="sub">Daily execution matters</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Mock Average</div>
+        <div class="value" id="mockAvg">0%</div>
+        <div class="sub">Target: 75%+</div>
+      </div>
+      <div class="card stat">
+        <div class="label">Habit Score</div>
+        <div class="value" id="habitScore">0%</div>
+        <div class="sub">Sleep, workout, revision</div>
+      </div>
+    </section>
+
+    <section class="grid main">
+      <div class="card">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('planner', this)">Planner</button>
+          <button class="tab" onclick="showTab('study', this)">Study Log</button>
+          <button class="tab" onclick="showTab('mock', this)">Mock Tests</button>
+          <button class="tab" onclick="showTab('habits', this)">Habits</button>
+        </div>
+
+        <div id="planner" class="tabPanel">
+          <h2>Daily Planner</h2>
+          <div class="row">
+            <input id="taskTitle" placeholder="Task e.g. 50 Reasoning MCQs">
+            <select id="taskSubject">
+              <option>Reasoning</option><option>GK/Current Affairs</option><option>Punjab History</option>
+              <option>Punjabi</option><option>English</option><option>ICT</option><option>Health</option>
+            </select>
+          </div>
+          <div class="space"></div>
+          <button onclick="addTask()">Add Task</button>
+          <div class="space"></div>
+          <div class="list" id="taskList"></div>
+        </div>
+
+        <div id="study" class="tabPanel" style="display:none">
+          <h2>Study Log</h2>
+          <div class="row3">
+            <select id="studySubject">
+              <option>Reasoning</option><option>Math/Data Analysis</option><option>GK/Current Affairs</option>
+              <option>Punjab History</option><option>Punjabi</option><option>English</option><option>ICT</option>
+            </select>
+            <input id="studyHours" type="number" min="0" step="0.25" placeholder="Hours">
+            <input id="studyMcqs" type="number" min="0" placeholder="MCQs solved">
+          </div>
+          <div class="space"></div>
+          <textarea id="studyNotes" placeholder="What did you cover? What mistakes did you make?"></textarea>
+          <div class="space"></div>
+          <button onclick="addStudy()">Save Study Log</button>
+          <div class="space"></div>
+          <div class="list" id="studyList"></div>
+        </div>
+
+        <div id="mock" class="tabPanel" style="display:none">
+          <h2>Mock Test Tracker</h2>
+          <div class="row3">
+            <input id="mockName" placeholder="Mock name">
+            <input id="mockScore" type="number" min="0" max="100" placeholder="Score / 100">
+            <input id="mockWrong" type="number" min="0" placeholder="Wrong questions">
+          </div>
+          <div class="space"></div>
+          <textarea id="mockMistakes" placeholder="Top mistakes and weak topics"></textarea>
+          <div class="space"></div>
+          <button onclick="addMock()">Save Mock</button>
+          <div class="space"></div>
+          <div class="list" id="mockList"></div>
+        </div>
+
+        <div id="habits" class="tabPanel" style="display:none">
+          <h2>Today’s Habits</h2>
+          <div class="habitGrid" id="habitGrid"></div>
+          <div class="space"></div>
+          <textarea id="journal" placeholder="Daily journal: energy, mood, distractions, improvement plan"></textarea>
+          <div class="space"></div>
+          <button onclick="saveJournal()">Save Journal</button>
+        </div>
+      </div>
+
+      <aside class="grid">
+        <div class="card">
+          <h2>Today’s Focus</h2>
+          <p class="quote" id="focusText"></p>
+          <div class="progressWrap"><div class="progress" id="dayProgress"></div></div>
+          <p class="small" id="progressText"></p>
+        </div>
+
+        <div class="card">
+          <h2>Exam Strategy</h2>
+          <div class="list">
+            <div class="item"><b>Part A Punjabi:</b><div class="itemMeta">Target 35+/50. Qualifying section — don’t take it lightly.</div></div>
+            <div class="item"><b>Part B:</b><div class="itemMeta">Target 75+. Daily MCQs + mock analysis is the main game.</div></div>
+            <div class="item"><b>Do not guess blindly:</b><div class="itemMeta">Use elimination because of negative marking.</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Data</h2>
+          <button class="secondary" onclick="exportData()">Export Backup</button>
+          <div class="space"></div>
+          <input type="file" id="importFile" accept=".json" onchange="importData(event)">
+          <div class="space"></div>
+          <button class="danger" onclick="resetAll()">Reset Everything</button>
+        </div>
+      </aside>
+    </section>
+
+    <div class="footer">Works offline. Data is saved in your browser/device using localStorage.</div>
+  </div>
+
+<script>
+const EXAM_DATE = new Date("2026-05-30T09:00:00+05:30");
+const todayKey = () => new Date().toISOString().slice(0,10);
+const storeKey = "cracktrack_v1";
+const defaultData = {
+  tasks: [
+    {id: crypto.randomUUID(), title:"50 Reasoning MCQs", subject:"Reasoning", done:false, date:todayKey()},
+    {id: crypto.randomUUID(), title:"30 GK/Current Affairs MCQs", subject:"GK/Current Affairs", done:false, date:todayKey()},
+    {id: crypto.randomUUID(), title:"20 Punjab History MCQs", subject:"Punjab History", done:false, date:todayKey()},
+    {id: crypto.randomUUID(), title:"Punjabi Part A revision", subject:"Punjabi", done:false, date:todayKey()}
+  ],
+  study: [],
+  mocks: [],
+  habits: {},
+  journals: {}
+};
+let data = JSON.parse(localStorage.getItem(storeKey) || "null") || defaultData;
+
+function save(){ localStorage.setItem(storeKey, JSON.stringify(data)); render(); }
+function showTab(id, btn){
+  document.querySelectorAll(".tabPanel").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+}
+function addTask(){
+  const title = document.getElementById("taskTitle").value.trim();
+  const subject = document.getElementById("taskSubject").value;
+  if(!title) return alert("Write a task first.");
+  data.tasks.unshift({id:crypto.randomUUID(), title, subject, done:false, date:todayKey()});
+  document.getElementById("taskTitle").value="";
+  save();
+}
+function toggleTask(id){ const t=data.tasks.find(x=>x.id===id); if(t){t.done=!t.done; save();}}
+function deleteTask(id){ data.tasks=data.tasks.filter(x=>x.id!==id); save();}
+function addStudy(){
+  const subject=document.getElementById("studySubject").value;
+  const hours=parseFloat(document.getElementById("studyHours").value||0);
+  const mcqs=parseInt(document.getElementById("studyMcqs").value||0);
+  const notes=document.getElementById("studyNotes").value.trim();
+  if(hours<=0 && mcqs<=0 && !notes) return alert("Add hours, MCQs, or notes.");
+  data.study.unshift({id:crypto.randomUUID(), subject, hours, mcqs, notes, date:todayKey(), time:new Date().toLocaleTimeString()});
+  document.getElementById("studyHours").value="";
+  document.getElementById("studyMcqs").value="";
+  document.getElementById("studyNotes").value="";
+  save();
+}
+function deleteStudy(id){ data.study=data.study.filter(x=>x.id!==id); save();}
+function addMock(){
+  const name=document.getElementById("mockName").value.trim() || "Mock Test";
+  const score=parseFloat(document.getElementById("mockScore").value||0);
+  const wrong=parseInt(document.getElementById("mockWrong").value||0);
+  const mistakes=document.getElementById("mockMistakes").value.trim();
+  if(score<=0) return alert("Enter your mock score.");
+  data.mocks.unshift({id:crypto.randomUUID(), name, score, wrong, mistakes, date:todayKey()});
+  document.getElementById("mockName").value="";
+  document.getElementById("mockScore").value="";
+  document.getElementById("mockWrong").value="";
+  document.getElementById("mockMistakes").value="";
+  save();
+}
+function deleteMock(id){ data.mocks=data.mocks.filter(x=>x.id!==id); save();}
+const habitNames=["Wake early","7h Study","Workout/Walk","No phone distraction","Current affairs","Punjabi revision","Mock analysis","Sleep before 11"];
+function toggleHabit(name){
+  const k=todayKey();
+  data.habits[k]=data.habits[k]||{};
+  data.habits[k][name]=!data.habits[k][name];
+  save();
+}
+function saveJournal(){
+  data.journals[todayKey()] = document.getElementById("journal").value;
+  save();
+  alert("Journal saved.");
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="cracktrack-backup.json";
+  a.click();
+}
+function importData(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{ try{ data=JSON.parse(reader.result); save(); alert("Backup imported."); }catch{ alert("Invalid JSON backup."); }};
+  reader.readAsText(file);
+}
+function resetAll(){
+  if(confirm("This will delete all app data on this device. Continue?")){
+    data=JSON.parse(JSON.stringify(defaultData)); localStorage.setItem(storeKey, JSON.stringify(data)); render();
+  }
+}
+function render(){
+  const k=todayKey();
+  const todaysTasks=data.tasks.filter(t=>t.date===k);
+  const done=todaysTasks.filter(t=>t.done).length;
+  const todaysStudy=data.study.filter(s=>s.date===k);
+  const hours=todaysStudy.reduce((a,b)=>a+(Number(b.hours)||0),0);
+  const mockAvg=data.mocks.length ? Math.round(data.mocks.reduce((a,b)=>a+Number(b.score),0)/data.mocks.length) : 0;
+  const todaysHabits=data.habits[k]||{};
+  const habitDone=habitNames.filter(h=>todaysHabits[h]).length;
+  const hScore=Math.round((habitDone/habitNames.length)*100);
+
+  const diff=EXAM_DATE-new Date();
+  const days=Math.max(0, Math.ceil(diff/(1000*60*60*24)));
+  document.getElementById("examCountdown").textContent = days + " days left for exam";
+  document.getElementById("todayHours").textContent = hours.toFixed(hours%1?1:0)+"h";
+  document.getElementById("tasksDone").textContent = done+"/"+todaysTasks.length;
+  document.getElementById("mockAvg").textContent = mockAvg+"%";
+  document.getElementById("habitScore").textContent = hScore+"%";
+  const progress=Math.min(100, Math.round(((done/Math.max(todaysTasks.length,1))*50)+((Math.min(hours,7)/7)*35)+(hScore*.15)));
+  document.getElementById("dayProgress").style.width=progress+"%";
+  document.getElementById("progressText").textContent = "Today execution score: "+progress+"%";
+  document.getElementById("focusText").textContent =
+    days > 14 ? "Build strong basics today. Your daily target: Reasoning + GK + Punjab History + Punjabi."
+    : days > 3 ? "Mock-test mode. Analyze mistakes more than reading new theory."
+    : "Revision only. Protect sleep, confidence, and accuracy.";
+
+  document.getElementById("taskList").innerHTML = data.tasks.slice(0,40).map(t=>`
+    <div class="item">
+      <div class="itemTop"><div><div class="itemTitle">${t.done?"✅":"⬜"} ${escapeHtml(t.title)}</div><div class="itemMeta">${t.date} • ${escapeHtml(t.subject)}</div></div><span class="tag">${t.done?"Done":"Pending"}</span></div>
+      <div class="actions"><button class="secondary" onclick="toggleTask('${t.id}')">${t.done?"Mark Pending":"Mark Done"}</button><button class="danger" onclick="deleteTask('${t.id}')">Delete</button></div>
+    </div>`).join("") || `<div class="item">No tasks yet.</div>`;
+
+  document.getElementById("studyList").innerHTML = data.study.slice(0,40).map(s=>`
+    <div class="item">
+      <div class="itemTop"><div><div class="itemTitle">${escapeHtml(s.subject)} — ${s.hours || 0}h, ${s.mcqs || 0} MCQs</div><div class="itemMeta">${s.date} • ${s.time || ""}</div></div><span class="tag">Study</span></div>
+      <div class="itemMeta">${escapeHtml(s.notes || "")}</div>
+      <div class="actions"><button class="danger" onclick="deleteStudy('${s.id}')">Delete</button></div>
+    </div>`).join("") || `<div class="item">No study logs yet.</div>`;
+
+  document.getElementById("mockList").innerHTML = data.mocks.slice(0,40).map(m=>`
+    <div class="item">
+      <div class="itemTop"><div><div class="itemTitle">${escapeHtml(m.name)} — ${m.score}/100</div><div class="itemMeta">${m.date} • Wrong: ${m.wrong || 0}</div></div><span class="tag">${m.score>=75?"Strong":m.score>=60?"Improve":"Weak"}</span></div>
+      <div class="progressWrap"><div class="progress" style="width:${Math.min(100,m.score)}%"></div></div>
+      <div class="itemMeta">${escapeHtml(m.mistakes || "")}</div>
+      <div class="actions"><button class="danger" onclick="deleteMock('${m.id}')">Delete</button></div>
+    </div>`).join("") || `<div class="item">No mock tests saved yet.</div>`;
+
+  document.getElementById("habitGrid").innerHTML = habitNames.map(h=>`
+    <div class="habitBox ${todaysHabits[h]?'done':''}" onclick="toggleHabit('${h}')">${todaysHabits[h]?'✅':'⬜'}<br>${h}</div>
+  `).join("");
+  document.getElementById("journal").value = data.journals[k] || "";
+}
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]));
+}
+render();
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+</script>
+</body>
+</html>
