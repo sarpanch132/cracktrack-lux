@@ -1,13 +1,13 @@
 {
-  "name": "CrackTrack Lux",
+  "name": "CrackTrack",
   "short_name": "CrackTrack",
-  "description": "Ultra luxury Punjab Excise Inspector prep tracker with editable schedule and daily MCQs.",
+  "description": "Premium Punjab Excise Inspector study tracker with MCQs, study logs, legal content library, mocks, habits, and backup.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#090A0F",
-  "theme_color": "#090A0F",
+  "background_color": "#070910",
+  "theme_color": "#070910",
   "icons": [
     {
       "src": "icon-192.png",
