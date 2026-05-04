@@ -1,9 +1,0 @@
-{
-  "name": "CrackTrack Self Tracker",
-  "short_name": "CrackTrack",
-  "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#080B12",
-  "theme_color": "#38BDF8",
-  "icons": []
-}
