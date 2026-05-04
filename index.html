@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#090A0F" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CrackTrack" />
+  <title>CrackTrack Lux — Punjab Excise Inspector Prep</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    :root{
+      --bg:#090A0F;
+      --bg2:#0D1017;
+      --card:rgba(15,20,29,.72);
+      --card2:rgba(255,255,255,.04);
+      --text:#F9FAFB;
+      --muted:#9CA3AF;
+      --gold:#E7C16E;
+      --gold2:#F6E6B5;
+      --blue:#5CC3FF;
+      --purple:#998CFF;
+      --green:#22C55E;
+      --yellow:#FACC15;
+      --red:#EF4444;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 24px 80px rgba(0,0,0,.45);
+      --safeTop:env(safe-area-inset-top);
+      --safeBottom:env(safe-area-inset-bottom);
+      --radius:24px;
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(92,195,255,.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(153,140,255,.15), transparent 30%),
+        radial-gradient(circle at bottom center, rgba(231,193,110,.07), transparent 32%),
+        linear-gradient(180deg,#090A0F 0%, #0A0D13 100%);
+      min-height:100vh;
+      padding-bottom:calc(86px + var(--safeBottom));
+    }
+    .app{max-width:1280px;margin:0 auto;padding:calc(20px + var(--safeTop)) 18px 30px}
+    header{
+      position:sticky;top:0;z-index:30;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      margin-bottom:16px;padding:8px 0 10px;
+      backdrop-filter:blur(18px);
+    }
+    .brand h1{
+      margin:0;font-size:32px;letter-spacing:-1px;
+      background:linear-gradient(90deg,var(--gold2),var(--gold),#FFFFFF);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:999px;
+      border:1px solid rgba(231,193,110,.24);
+      background:rgba(231,193,110,.09);
+      color:#FFE7B0;font-size:13px;font-weight:900;
+      white-space:nowrap;
+    }
+    .grid{display:grid;gap:14px}
+    .stats{grid-template-columns:repeat(4,1fr)}
+    .main{grid-template-columns:1.12fr .88fr}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+    }
+    .card.lux{
+      background:
+        linear-gradient(135deg, rgba(231,193,110,.09), rgba(255,255,255,.03) 30%, rgba(92,195,255,.06) 100%);
+    }
+    .stat .label{font-size:12px;color:var(--muted)}
+    .stat .value{font-size:30px;font-weight:900;letter-spacing:-.8px;margin-top:6px}
+    .stat .sub{font-size:12px;color:var(--muted);margin-top:4px}
+    h2{margin:0 0 14px;font-size:18px;letter-spacing:-.25px}
+    h3{margin:0 0 10px;font-size:14px;color:#E5E7EB}
+    .tabs,.subtabs{
+      display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;
+    }
+    .tab,.subtab{
+      width:auto;padding:10px 13px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.05);color:#D1D5DB;font-size:13px;font-weight:800;cursor:pointer;
+    }
+    .tab.active,.subtab.active{
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#1A1407;border-color:transparent;
+      box-shadow:0 10px 22px rgba(231,193,110,.18);
+    }
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    input,select,textarea,button{
+      width:100%;border-radius:16px;padding:12px 13px;
+      font:inherit;color:var(--text);
+      border:1px solid var(--border);
+      background:rgba(12,16,24,.85);
+      outline:none;
+    }
+    input::placeholder,textarea::placeholder{color:#8B93A4}
+    textarea{min-height:100px;resize:vertical}
+    button{
+      cursor:pointer;border:0;font-weight:900;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#181206;
+      transition:.18s transform,.18s opacity,.18s box-shadow;
+    }
+    button.secondary{
+      background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--border);
+    }
+    button.softBlue{
+      background:linear-gradient(135deg,var(--blue),var(--purple));
+      color:#07121C;
+    }
+    button.danger{
+      background:rgba(239,68,68,.18);color:#FECACA;border:1px solid rgba(239,68,68,.35);
+    }
+    button:active{transform:scale(.985)}
+    .list{display:flex;flex-direction:column;gap:10px;max-height:580px;overflow:auto;padding-right:2px}
+    .item{
+      background:rgba(12,16,24,.78);
+      border:1px solid var(--border);
+      border-radius:18px;padding:13px;
+    }
+    .itemTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .itemTitle{font-size:15px;font-weight:900;line-height:1.35}
+    .itemMeta{color:var(--muted);font-size:12px;line-height:1.5;margin-top:4px}
+    .tag{
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:999px;padding:4px 9px;font-size:11px;font-weight:900;
+      background:rgba(92,195,255,.11);border:1px solid rgba(92,195,255,.20);color:#D4F1FF;
+      white-space:nowrap;
+    }
+    .tag.gold{background:rgba(231,193,110,.11);border-color:rgba(231,193,110,.24);color:#FFE9BA}
+    .tag.green{background:rgba(34,197,94,.13);border-color:rgba(34,197,94,.25);color:#D1FAE5}
+    .tag.red{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.25);color:#FECACA}
+    .actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .actions button{padding:8px 11px;border-radius:12px;font-size:12px}
+    .progressWrap{height:12px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:10px}
+    .progress{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--green))}
+    .focus{
+      font-size:15px;line-height:1.65;color:#E5E7EB;margin:0;
+    }
+    .small{font-size:12px;color:var(--muted);line-height:1.55}
+    .kpi{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+    }
+    .mini{
+      border:1px solid var(--border);background:rgba(255,255,255,.03);
+      border-radius:18px;padding:13px;
+    }
+    .mini .v{font-size:22px;font-weight:900}
+    .sectionTitle{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px
+    }
+    .scheduleBlock{
+      border-left:3px solid var(--gold);padding-left:12px;margin-top:8px
+    }
+    .mcqOption{
+      padding:11px 12px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,.03);
+      cursor:pointer;font-size:14px;line-height:1.5;
+    }
+    .mcqOption.selected{border-color:rgba(92,195,255,.50);background:rgba(92,195,255,.10)}
+    .mcqOption.correct{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.12)}
+    .mcqOption.wrong{border-color:rgba(239,68,68,.5);background:rgba(239,68,68,.12)}
+    .questionNo{font-size:12px;color:#FFE6AF;font-weight:900;margin-bottom:7px}
+    .bottomNav{
+      position:fixed;left:0;right:0;bottom:0;z-index:50;
+      display:none;grid-template-columns:repeat(6,1fr);gap:8px;
+      padding:8px 10px calc(8px + var(--safeBottom));
+      background:rgba(9,10,15,.82);backdrop-filter:blur(24px);
+      border-top:1px solid var(--border);
+    }
+    .bottomNav button{
+      padding:9px 6px;font-size:11px;border-radius:14px;font-weight:800;
+      background:rgba(255,255,255,.05);color:#D1D5DB;border:1px solid var(--border);
+    }
+    .bottomNav button.active{
+      background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1A1407;border-color:transparent;
+    }
+    ul{margin:8px 0 0;padding-left:18px;color:#E5E7EB;line-height:1.6}
+    .footer{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
+    @media (max-width:930px){
+      .stats,.main,.split,.triple,.kpi{grid-template-columns:1fr}
+      header{position:relative;flex-direction:column;align-items:flex-start}
+      .bottomNav{display:grid}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">
+        <h1>CrackTrack Lux</h1>
+        <p>Ultra-luxury prep app for Punjab Excise Inspector — personalized around your running and study routine.</p>
+      </div>
+      <div class="badge" id="countdownBadge">⏳ Countdown</div>
+    </header>
+
+    <section class="grid stats">
+      <div class="card stat lux"><div class="label">Today Study</div><div class="value" id="todayHours">0h</div><div class="sub">Main window: 9 AM – 5 PM + 9–10 PM</div></div>
+      <div class="card stat"><div class="label">Tasks Completed</div><div class="value" id="tasksDone">0/0</div><div class="sub">Execution score decides success</div></div>
+      <div class="card stat"><div class="label">MCQ Accuracy</div><div class="value" id="mcqAccuracy">0%</div><div class="sub">Daily practice inside app</div></div>
+      <div class="card stat"><div class="label">Mock Average</div><div class="value" id="mockAvg">0%</div><div class="sub">Target: 75%+</div></div>
+    </section>
+
+    <section class="grid main">
+      <div class="card lux">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('dashboard', this)">Dashboard</button>
+          <button class="tab" onclick="showTab('schedule', this)">Schedule</button>
+          <button class="tab" onclick="showTab('today', this)">Today</button>
+          <button class="tab" onclick="showTab('mcq', this)">Daily MCQs</button>
+          <button class="tab" onclick="showTab('study', this)">Study Log</button>
+          <button class="tab" onclick="showTab('mock', this)">Mocks</button>
+          <button class="tab" onclick="showTab('habits', this)">Habits</button>
+        </div>
+
+        <div id="dashboard" class="tabPanel">
+          <div class="sectionTitle"><h2>Daily Focus</h2><span class="tag gold" id="phaseTag">Phase</span></div>
+          <p class="focus" id="focusText"></p>
+          <div class="progressWrap"><div class="progress" id="dayProgress"></div></div>
+          <p class="small" id="progressText"></p>
+          <div class="split" style="margin-top:14px">
+            <div class="item">
+              <div class="itemTitle">Your Personalized Day</div>
+              <div class="scheduleBlock">
+                <div class="itemMeta" id="routineLine1"></div>
+                <div class="itemMeta" id="routineLine2"></div>
+                <div class="itemMeta" id="routineLine3"></div>
+                <div class="itemMeta" id="routineLine4"></div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="itemTitle">Exam Strategy Snapshot</div>
+              <ul>
+                <li>Part A Punjabi: target 35+/50</li>
+                <li>Part B: target 75+/100</li>
+                <li>Reasoning + GK = highest priority</li>
+                <li>Analyze mistakes daily, not just theory</li>
+                <li>Guess only after eliminating options</li>
+              </ul>
+            </div>
+          </div>
+          <div class="kpi" style="margin-top:14px">
+            <div class="mini"><div class="small">Current Phase</div><div class="v" id="currentPhaseMini">Phase 1</div></div>
+            <div class="mini"><div class="small">Night Revision</div><div class="v">9–10 PM</div></div>
+            <div class="mini"><div class="small">Running Window</div><div class="v">5–7 AM</div></div>
+            <div class="mini"><div class="small">Study Window</div><div class="v">9–5 + 9–10</div></div>
+          </div>
+        </div>
+
+        <div id="schedule" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Editable Schedule</h2><span class="tag">Customize your timing</span></div>
+          <div class="subtabs">
+            <button class="subtab active" onclick="showSubtab('schedulePlan', this, 'scheduleSub')">Plan</button>
+            <button class="subtab" onclick="showSubtab('scheduleEditor', this, 'scheduleSub')">Edit Routine</button>
+          </div>
+
+          <div id="schedulePlan" class="scheduleSub">
+            <div class="split">
+              <div class="item">
+                <div class="itemTitle">Default Daily Time Blocks</div>
+                <ul id="routinePreview"></ul>
+              </div>
+              <div class="item">
+                <div class="itemTitle">How the Day is Structured</div>
+                <ul>
+                  <li>5–7 AM: running and freshness</li>
+                  <li>9–11 AM: core concept work</li>
+                  <li>11:15 AM–1 PM: second deep session</li>
+                  <li>2–4 PM: third study session</li>
+                  <li>4–5 PM: light revision / English / ICT / MCQs</li>
+                  <li>9–10 PM: mistake notebook + recap</li>
+                </ul>
+              </div>
+            </div>
+            <div style="height:12px"></div>
+            <div class="list" id="scheduleList"></div>
+          </div>
+
+          <div id="scheduleEditor" class="scheduleSub" style="display:none">
+            <div class="item">
+              <div class="itemTitle">Edit Your Routine</div>
+              <div class="itemMeta">You can change the timing labels used throughout the app.</div>
+              <div class="split" style="margin-top:10px">
+                <input id="runTime" placeholder="Running time" />
+                <input id="morningTime" placeholder="Session 1 time" />
+              </div>
+              <div class="split" style="margin-top:10px">
+                <input id="middayTime" placeholder="Session 2 time" />
+                <input id="afternoonTime" placeholder="Session 3 time" />
+              </div>
+              <div class="split" style="margin-top:10px">
+                <input id="eveningTime" placeholder="Session 4 time" />
+                <input id="nightTime" placeholder="Night revision time" />
+              </div>
+              <div class="actions">
+                <button onclick="saveRoutine()">Save Routine</button>
+                <button class="secondary" onclick="resetRoutine()">Reset Default</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="today" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Today’s Tasks</h2><span class="tag gold" id="todayTitleTag">Today</span></div>
+          <p class="small" id="todayBrief"></p>
+          <div class="actions">
+            <button onclick="loadTodayTasks()">Load / Refresh Today’s Tasks</button>
+            <button class="secondary" onclick="addCustomTaskPrompt()">Add Custom Task Quickly</button>
+          </div>
+          <div style="height:12px"></div>
+          <div class="list" id="taskList"></div>
+        </div>
+
+        <div id="mcq" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Daily MCQ Practice</h2><span class="tag">10 questions daily</span></div>
+          <div class="split">
+            <select id="mcqSubject">
+              <option value="mixed">Mixed Daily Set</option>
+              <option value="Reasoning">Reasoning</option>
+              <option value="GK/Current Affairs">GK/Current Affairs</option>
+              <option value="Punjab History">Punjab History</option>
+              <option value="Punjabi">Punjabi</option>
+              <option value="English">English</option>
+              <option value="ICT">ICT</option>
+            </select>
+            <button class="softBlue" onclick="startQuiz()">Generate Today’s MCQs</button>
+          </div>
+          <div style="height:12px"></div>
+          <div class="item">
+            <div class="itemTitle" id="quizHeader">Tap “Generate Today’s MCQs” to start.</div>
+            <div class="itemMeta" id="quizProgress"></div>
+          </div>
+          <div style="height:12px"></div>
+          <div id="quizArea"></div>
+          <div class="actions" id="quizActions" style="display:none">
+            <button onclick="submitQuiz()">Submit Quiz</button>
+            <button class="secondary" onclick="startQuiz()">New Set</button>
+          </div>
+          <div class="item" id="quizResult" style="display:none;margin-top:12px"></div>
+        </div>
+
+        <div id="study" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Study Log</h2><span class="tag">Track hours and output</span></div>
+          <div class="triple">
+            <select id="studySubject">
+              <option>Reasoning</option><option>Math/Data Analysis</option><option>GK/Current Affairs</option>
+              <option>Punjab History</option><option>Punjabi</option><option>English</option><option>ICT</option><option>Mock Analysis</option>
+            </select>
+            <input id="studyHoursInput" type="number" min="0" step="0.25" placeholder="Hours" />
+            <input id="studyMcqsInput" type="number" min="0" placeholder="MCQs solved" />
+          </div>
+          <div style="height:10px"></div>
+          <textarea id="studyNotes" placeholder="What did you cover today? What mistakes did you repeat?"></textarea>
+          <div style="height:10px"></div>
+          <button onclick="addStudyLog()">Save Study Log</button>
+          <div style="height:12px"></div>
+          <div class="list" id="studyList"></div>
+        </div>
+
+        <div id="mock" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Mock Tracker</h2><span class="tag">Analyze every test</span></div>
+          <div class="triple">
+            <input id="mockName" placeholder="Mock name" />
+            <input id="mockScore" type="number" min="0" max="100" placeholder="Score / 100" />
+            <input id="mockWrong" type="number" min="0" placeholder="Wrong questions" />
+          </div>
+          <div style="height:10px"></div>
+          <textarea id="mockNotes" placeholder="Mistake notebook: wrong topic, correct concept, repeat date"></textarea>
+          <div style="height:10px"></div>
+          <button onclick="addMock()">Save Mock</button>
+          <div style="height:12px"></div>
+          <div class="list" id="mockList"></div>
+        </div>
+
+        <div id="habits" class="tabPanel" style="display:none">
+          <div class="sectionTitle"><h2>Habits & Journal</h2><span class="tag">Discipline tracker</span></div>
+          <div class="triple" id="habitGrid"></div>
+          <div style="height:12px"></div>
+          <textarea id="journal" placeholder="Daily journal: energy, distractions, wins, improvement plan"></textarea>
+          <div style="height:10px"></div>
+          <button onclick="saveJournal()">Save Journal</button>
+        </div>
+      </div>
+
+      <aside class="grid">
+        <div class="card">
+          <div class="sectionTitle"><h2>Install on iPhone</h2><span class="tag gold">PWA</span></div>
+          <p class="small">Upload this folder to GitHub Pages, Netlify, or Vercel. Then open the hosted link in <b>Safari</b> → tap <b>Share</b> → <b>Add to Home Screen</b>. It will feel like a native iOS app.</p>
+        </div>
+
+        <div class="card">
+          <div class="sectionTitle"><h2>Today’s Targets</h2><span class="tag green">Smart Focus</span></div>
+          <div class="list">
+            <div class="item"><div class="itemTitle">MCQ Target</div><div class="itemMeta">100–150 mixed MCQs daily. Minimum 50 if tired, but never skip.</div></div>
+            <div class="item"><div class="itemTitle">Night Rule</div><div class="itemMeta">9–10 PM only for revision, mistake notebook, and recap — not for learning brand new heavy topics.</div></div>
+            <div class="item"><div class="itemTitle">Running Rule</div><div class="itemMeta">Treat 5–7 AM running as your discipline anchor. It supports focus, confidence, and stamina.</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sectionTitle"><h2>Backup</h2><span class="tag">Safe storage</span></div>
+          <button class="secondary" onclick="exportData()">Export Backup</button>
+          <div style="height:10px"></div>
+          <input type="file" id="importFile" accept=".json" onchange="importData(event)" />
+          <div style="height:10px"></div>
+          <button class="danger" onclick="resetAll()">Reset All Data</button>
+        </div>
+      </aside>
+    </section>
+
+    <div class="footer">CrackTrack Lux • Offline-ready • Personalized for Punjab Excise Inspector exam prep</div>
+  </div>
+
+  <nav class="bottomNav">
+    <button class="active" onclick="mobileTab('dashboard', this)">Home</button>
+    <button onclick="mobileTab('schedule', this)">Plan</button>
+    <button onclick="mobileTab('today', this)">Today</button>
+    <button onclick="mobileTab('mcq', this)">MCQs</button>
+    <button onclick="mobileTab('study', this)">Study</button>
+    <button onclick="mobileTab('mock', this)">Mocks</button>
+  </nav>
+
+<script>
+const EXAM_DATE = new Date("2026-05-30T09:00:00+05:30");
+const START_DATE = "2026-05-05";
+const storeKey = "cracktrack_lux_v3";
+const todayKey = () => new Date().toISOString().slice(0,10);
+
+const defaultRoutine = {
+  running: "5:00 AM – 7:00 AM • Running / Freshness",
+  session1: "9:00 AM – 11:00 AM • Reasoning / Maths / Core concepts",
+  session2: "11:15 AM – 1:00 PM • GK / Current Affairs / MCQs",
+  session3: "2:00 PM – 4:00 PM • Punjab History / Punjabi",
+  session4: "4:00 PM – 5:00 PM • English / ICT / Revision",
+  night: "9:00 PM – 10:00 PM • Mistake notebook / recap / light revision"
+};
+
+const habitNames = [
+  "Running done",
+  "Core study done",
+  "MCQs completed",
+  "Phone controlled",
+  "Current affairs",
+  "Punjabi revision",
+  "Night recap",
+  "Sleep on time",
+  "Workout recovery"
+];
+
+const PLAN = [
+ {date:"2026-05-05", phase:"Phase 1", title:"Reasoning Base 1", brief:"Use your fresh energy after the run for logic building.", tasks:[
+   "9–11: Series + coding-decoding (60 MCQs)",
+   "11:15–1: Current affairs (30 MCQs) + 10 notes",
+   "2–4: Punjabi Part A — Guru Nanak Dev Ji + synonyms/antonyms",
+   "4–5: English articles + prepositions",
+   "9–10: Mistake notebook + 20 mixed MCQs"
+ ]},
+ {date:"2026-05-06", phase:"Phase 1", title:"Reasoning Base 2", brief:"Complete high-frequency reasoning types.", tasks:[
+   "9–11: Analogy + classification + alphabet test (70 MCQs)",
+   "11:15–1: GK appointments + awards (30 MCQs)",
+   "2–4: Punjabi muhavare + akhan + shabad bhed",
+   "4–5: ICT basics — computer hardware/software",
+   "9–10: Revise wrong reasoning questions"
+ ]},
+ {date:"2026-05-07", phase:"Phase 1", title:"Reasoning Base 3", brief:"Close the first reasoning cycle with timed practice.", tasks:[
+   "9–11: Blood relation + direction + syllogism (60 MCQs)",
+   "11:15–1: GK sports + important days",
+   "2–4: Punjab physical features + ancient Punjab",
+   "4–5: English subject-verb agreement",
+   "9–10: 25 mixed MCQs + notes"
+ ]},
+ {date:"2026-05-08", phase:"Phase 1", title:"Math & Data 1", brief:"Basic exam maths with simple accuracy focus.", tasks:[
+   "9–11: Percentage + ratio (60 MCQs)",
+   "11:15–1: Current affairs recap set",
+   "2–4: Punjabi — Guru Angad Dev Ji + Guru Ramdas Ji",
+   "4–5: ICT internet + network basics",
+   "9–10: Formula revision + 15 DI questions"
+ ]},
+ {date:"2026-05-09", phase:"Phase 1", title:"Math & Data 2", brief:"Cover remaining basic arithmetic.", tasks:[
+   "9–11: Average + profit/loss (60 MCQs)",
+   "11:15–1: Punjab GK one-liners",
+   "2–4: Ancient Punjab + Sikh Gurus overview",
+   "4–5: English active/passive basics",
+   "9–10: Quick revision + note errors"
+ ]},
+ {date:"2026-05-10", phase:"Phase 1", title:"Math & Data 3", brief:"Mixed arithmetic and charts day.", tasks:[
+   "9–11: Simple interest + time/work + data table practice",
+   "11:15–1: Awards + science/current affairs",
+   "2–4: Punjabi ling/vachan + shudh-ashudh",
+   "4–5: ICT MS Word basics",
+   "9–10: 20 mixed maths questions"
+ ]},
+ {date:"2026-05-11", phase:"Phase 1", title:"Punjab History 1", brief:"Shift the core afternoon block to Punjab history.", tasks:[
+   "9–11: Reasoning mixed timed set (50 Q)",
+   "11:15–1: Current affairs mixed set",
+   "2–4: Physical features + ancient Punjab + early Sikh history",
+   "4–5: Punjabi mini revision",
+   "9–10: Punjab notes recap"
+ ]},
+ {date:"2026-05-12", phase:"Phase 1", title:"Punjab History 2", brief:"History and culture become your main scoring edge.", tasks:[
+   "9–11: Weak reasoning revision",
+   "11:15–1: GK पंजाब-related current events",
+   "2–4: Guru Tegh Bahadur Ji + Guru Gobind Singh Ji + Adi Granth",
+   "4–5: English prepositions + one-word substitution",
+   "9–10: 20 Punjab history MCQs"
+ ]},
+ {date:"2026-05-13", phase:"Phase 1", title:"Punjab History 3", brief:"Complete major Punjab topics in one sweep.", tasks:[
+   "9–11: Mixed reasoning + DI",
+   "11:15–1: Economy/environment CA MCQs",
+   "2–4: Sikh rulers + Mughal/Afghan period + freedom movements",
+   "4–5: ICT Excel + spreadsheet basics",
+   "9–10: Mistake notebook update"
+ ]},
+ {date:"2026-05-14", phase:"Phase 1", title:"Phase 1 Revision", brief:"Revise everything studied so far.", tasks:[
+   "9–11: Reasoning sectional test",
+   "11:15–1: GK sectional test",
+   "2–4: Punjab history + Punjabi Part A mini mock",
+   "4–5: ICT + English quick revision",
+   "9–10: Analyze weak zones"
+ ]},
+ {date:"2026-05-15", phase:"Phase 2", title:"Punjabi Focus 1", brief:"Secure the qualifying section strongly.", tasks:[
+   "9–11: Punjabi Part A full-topic revision",
+   "11:15–1: GK current affairs MCQs",
+   "2–4: Guru topics + synonyms/antonyms + muhavare",
+   "4–5: English articles/prepositions",
+   "9–10: Punjabi mock analysis"
+ ]},
+ {date:"2026-05-16", phase:"Phase 2", title:"Punjabi Focus 2", brief:"Push Part A above the safe line.", tasks:[
+   "9–11: Punjabi grammar — agetar/pichettar, ling/vachan, vishram chinh",
+   "11:15–1: Reasoning mixed speed set",
+   "2–4: Punjabi numbers/months/days + shudh-ashudh",
+   "4–5: ICT quick MCQs",
+   "9–10: Part A mini mock"
+ ]},
+ {date:"2026-05-17", phase:"Phase 2", title:"English Grammar Day", brief:"Use the lighter 4–5 PM block smartly for English.", tasks:[
+   "9–11: Reasoning + maths maintenance set",
+   "11:15–1: Current affairs recap",
+   "2–4: Punjab history timed practice",
+   "4–5: English full grammar set (SVA, voice, narration, idioms)",
+   "9–10: 25 English MCQs"
+ ]},
+ {date:"2026-05-18", phase:"Phase 2", title:"ICT Easy Marks", brief:"Lock the easy computer marks.", tasks:[
+   "9–11: GK/CA mixed set",
+   "11:15–1: Reasoning timed practice",
+   "2–4: Punjab history revision",
+   "4–5: ICT — Word, Excel, PowerPoint, shortcuts",
+   "9–10: ICT MCQ drill"
+ ]},
+ {date:"2026-05-19", phase:"Phase 2", title:"Current Affairs 1", brief:"Use midday block for current affairs volume.", tasks:[
+   "9–11: Reasoning sectional",
+   "11:15–1: Last 6 months national CA",
+   "2–4: Punjab govt schemes + Punjab CA",
+   "4–5: English vocabulary / one-word / synonyms",
+   "9–10: 30 CA MCQs"
+ ]},
+ {date:"2026-05-20", phase:"Phase 2", title:"Current Affairs 2", brief:"Finish the second CA cycle.", tasks:[
+   "9–11: DI / maths maintenance",
+   "11:15–1: Awards / appointments / sports / economy",
+   "2–4: Punjab history + Punjabi mixed set",
+   "4–5: ICT revision",
+   "9–10: Mistake notebook + 20 MCQs"
+ ]},
+ {date:"2026-05-21", phase:"Phase 2", title:"High-Scoring Revision", brief:"Merge all scoring sections together.", tasks:[
+   "9–11: Punjabi mini mock + review",
+   "11:15–1: GK sectional test",
+   "2–4: Punjab history timed set",
+   "4–5: English + ICT combined set",
+   "9–10: Review repeated weak areas"
+ ]},
+ {date:"2026-05-22", phase:"Phase 3", title:"Mock Mode 1", brief:"From now on, testing and analysis dominate.", tasks:[
+   "9–11: Full Part B mock",
+   "11:15–1: Mock analysis — note every wrong concept",
+   "2–4: Weak-topic repair from mock",
+   "4–5: Punjabi Part A quick test",
+   "9–10: Mistake notebook recap"
+ ]},
+ {date:"2026-05-23", phase:"Phase 3", title:"Mock Mode 2", brief:"Sectional pressure with speed focus.", tasks:[
+   "9–11: Reasoning timed set",
+   "11:15–1: GK/Punjab GK timed set",
+   "2–4: Punjab history notes revision",
+   "4–5: English + ICT quick test",
+   "9–10: Wrong answer review"
+ ]},
+ {date:"2026-05-24", phase:"Phase 3", title:"Mock Mode 3", brief:"Second full test day.", tasks:[
+   "9–11: Full Part B mock",
+   "11:15–1: Mock analysis",
+   "2–4: Current affairs revision",
+   "4–5: Part A Punjabi mini mock",
+   "9–10: Review mistakes"
+ ]},
+ {date:"2026-05-25", phase:"Phase 3", title:"Mock Mode 4", brief:"Shorter blocks, more precision.", tasks:[
+   "9–11: Reasoning + maths timed mixed set",
+   "11:15–1: GK timed mixed set",
+   "2–4: Punjab history timed set",
+   "4–5: ICT/English brush-up",
+   "9–10: Weak topic flash revision"
+ ]},
+ {date:"2026-05-26", phase:"Phase 3", title:"Mock Mode 5", brief:"Third full mock. Focus on score jump.", tasks:[
+   "9–11: Full Part B mock",
+   "11:15–1: Mock analysis",
+   "2–4: Top 5 weak areas repair",
+   "4–5: OMR-style accuracy practice",
+   "9–10: Part A recap"
+ ]},
+ {date:"2026-05-27", phase:"Phase 3", title:"Mock Mode 6", brief:"Polish exam rhythm.", tasks:[
+   "9–11: Mixed 150 MCQ practice",
+   "11:15–1: Current affairs final recap",
+   "2–4: Punjab history one-liners",
+   "4–5: English grammar rules + ICT shortcuts",
+   "9–10: Repeat mistake notebook"
+ ]},
+ {date:"2026-05-28", phase:"Phase 3", title:"Mock Mode 7", brief:"Last full mock and calm revision.", tasks:[
+   "9–11: Final full mock",
+   "11:15–1: Deep analysis",
+   "2–4: Revise repeated mistakes only",
+   "4–5: Light Punjabi + ICT brush-up",
+   "9–10: Pack exam essentials mentally"
+ ]},
+ {date:"2026-05-29", phase:"Final", title:"Final Revision", brief:"No new topics. Stay calm and clean.", tasks:[
+   "9–11: Punjab history notes + Punjabi grammar recap",
+   "11:15–1: Current affairs notes recap",
+   "2–4: Reasoning tricks + English grammar rules",
+   "4–5: ICT shortcuts + light mixed MCQs",
+   "9–10: Early shutdown, confidence reset, proper sleep"
+ ]}
+];
+
+const MCQ_BANK = [
+  {subject:"Reasoning", q:"Find the next term: 2, 6, 12, 20, 30, ?", options:["36","40","42","44"], answer:2, explanation:"Pattern is +4, +6, +8, +10, so next is +12 = 42."},
+  {subject:"Reasoning", q:"If A is brother of B and B is sister of C, then A is C's?", options:["Brother","Sister","Father","Cannot be determined"], answer:3, explanation:"A is male, but C's gender is unknown, so exact relation to C cannot be determined beyond sibling."},
+  {subject:"Reasoning", q:"Which word does NOT belong? Apple, Mango, Banana, Carrot", options:["Apple","Mango","Banana","Carrot"], answer:3, explanation:"Carrot is a vegetable; the others are fruits."},
+  {subject:"Reasoning", q:"Complete the analogy: Book : Read :: Pen : ?", options:["Write","Ink","Page","Draw"], answer:0, explanation:"A book is read; a pen is used to write."},
+  {subject:"Reasoning", q:"A man walks 5 km north, then 3 km east. How far is he from the starting point?", options:["8 km","2 km","√34 km","4 km"], answer:2, explanation:"Use Pythagoras: distance = √(5²+3²)=√34."},
+
+  {subject:"GK/Current Affairs", q:"Which of the following is a Union Territory?", options:["Punjab","Haryana","Chandigarh","Himachal Pradesh"], answer:2, explanation:"Chandigarh is a Union Territory."},
+  {subject:"GK/Current Affairs", q:"The national animal of India is:", options:["Lion","Elephant","Tiger","Leopard"], answer:2, explanation:"The Bengal tiger is the national animal of India."},
+  {subject:"GK/Current Affairs", q:"The Indian Constitution came into force on:", options:["15 August 1947","26 January 1950","26 November 1949","2 October 1948"], answer:1, explanation:"It came into effect on 26 January 1950."},
+  {subject:"GK/Current Affairs", q:"Which sport is associated with Wimbledon?", options:["Cricket","Tennis","Hockey","Badminton"], answer:1, explanation:"Wimbledon is a major tennis championship."},
+  {subject:"GK/Current Affairs", q:"Who is known as the Father of the Nation in India?", options:["Bhagat Singh","Mahatma Gandhi","Jawaharlal Nehru","Subhas Chandra Bose"], answer:1, explanation:"Mahatma Gandhi is widely referred to by that title."},
+
+  {subject:"Punjab History", q:"The holy city of Amritsar was founded by:", options:["Guru Nanak Dev Ji","Guru Arjan Dev Ji","Guru Ramdas Ji","Guru Gobind Singh Ji"], answer:2, explanation:"Amritsar was founded by Guru Ramdas Ji."},
+  {subject:"Punjab History", q:"Guru Granth Sahib was compiled by:", options:["Guru Nanak Dev Ji","Guru Arjan Dev Ji","Guru Tegh Bahadur Ji","Guru Gobind Singh Ji"], answer:1, explanation:"Guru Arjan Dev Ji compiled the Adi Granth."},
+  {subject:"Punjab History", q:"Bhangra is traditionally associated with which region?", options:["Punjab","Gujarat","Kerala","Rajasthan"], answer:0, explanation:"Bhangra is a traditional folk dance of Punjab."},
+  {subject:"Punjab History", q:"The founder of the Sikh Empire was:", options:["Maharaja Ranjit Singh","Banda Singh Bahadur","Hari Singh Nalwa","Guru Gobind Singh Ji"], answer:0, explanation:"Maharaja Ranjit Singh founded the Sikh Empire."},
+  {subject:"Punjab History", q:"Which river is NOT part of Punjab's five rivers?", options:["Beas","Ravi","Chenab","Yamuna"], answer:3, explanation:"Yamuna is not one of the traditional five rivers of Punjab."},
+
+  {subject:"Punjabi", q:"'ਪੁੱਤਰ' ਦਾ ਬਹੁਵਚਨ ਕੀ ਹੈ?", options:["ਪੁੱਤਰਾਂ","ਪੁੱਤਰੇ","ਪੁੱਤਰਾ","ਪੁੱਤਰਿ"], answer:0, explanation:"'ਪੁੱਤਰਾਂ' is the correct plural form."},
+  {subject:"Punjabi", q:"'ਸੱਚ' ਦਾ ਵਿਪਰੀਤ ਸ਼ਬਦ ਹੈ:", options:["ਝੂਠ","ਸੁੱਚਾ","ਠੀਕ","ਸਹੀ"], answer:0, explanation:"The opposite of 'ਸੱਚ' is 'ਝੂਠ'."},
+  {subject:"Punjabi", q:"'ਅੱਖੀਂ ਦੇਖਿਆ' ਕਿਸ ਕਿਸਮ ਦਾ ਸ਼ਬਦ-ਜੋੜ ਹੈ?", options:["ਮੁਹਾਵਰਾ","ਵਿਰੋਧੀ ਸ਼ਬਦ","ਪਰੇਯਾਵਾਚੀ","ਵਚਨ"], answer:0, explanation:"It is used as a muhavra/idiomatic expression."},
+  {subject:"Punjabi", q:"ਗੁਰੂ ਗੋਬਿੰਦ ਸਿੰਘ ਜੀ ਦੇ ਪਿਤਾ ਜੀ ਕੌਣ ਸਨ?", options:["ਗੁਰੂ ਅਰਜਨ ਦੇਵ ਜੀ","ਗੁਰੂ ਤੇਗ ਬਹਾਦਰ ਜੀ","ਗੁਰੂ ਹਰਕ੍ਰਿਸ਼ਨ ਜੀ","ਗੁਰੂ ਅੰਗਦ ਦੇਵ ਜੀ"], answer:1, explanation:"Guru Tegh Bahadur Ji was the father of Guru Gobind Singh Ji."},
+  {subject:"Punjabi", q:"'ਲਿੰਗ' ਕਿਸ ਨਾਲ ਸੰਬੰਧਿਤ ਹੈ?", options:["ਵਚਨ","ਜਾਤੀ","ਲਿੰਗ ਭੇਦ","ਸੰਗਿਆ ਦਾ ਭੇਦ"], answer:3, explanation:"It relates to gender classification of nouns."},
+
+  {subject:"English", q:"Choose the correct sentence.", options:["He go to school daily.","He goes to school daily.","He going to school daily.","He gone to school daily."], answer:1, explanation:"Singular subject 'He' takes 'goes'."},
+  {subject:"English", q:"Select the synonym of 'Brave'.", options:["Cowardly","Bold","Weak","Sad"], answer:1, explanation:"'Bold' is a synonym of 'Brave'."},
+  {subject:"English", q:"Choose the correct article: ___ honest man.", options:["A","An","The","No article"], answer:1, explanation:"'Honest' begins with a vowel sound, so 'An' is correct."},
+  {subject:"English", q:"Identify the correct passive form: 'They make chairs.'", options:["Chairs are made by them.","Chairs is made by them.","Chairs were made by them.","Chairs made by them."], answer:0, explanation:"Simple present passive: are made."},
+  {subject:"English", q:"Choose the correctly spelled word.", options:["Recieve","Receive","Receeve","Receve"], answer:1, explanation:"The correct spelling is 'Receive'."},
+
+  {subject:"ICT", q:"Which of the following is an input device?", options:["Monitor","Keyboard","Printer","Speaker"], answer:1, explanation:"Keyboard is an input device."},
+  {subject:"ICT", q:"Excel is mainly used for:", options:["Presentations","Spreadsheets","Drawing","Browsing"], answer:1, explanation:"Microsoft Excel is spreadsheet software."},
+  {subject:"ICT", q:"Shortcut key to copy in Windows is:", options:["Ctrl + X","Ctrl + P","Ctrl + C","Ctrl + V"], answer:2, explanation:"Ctrl + C is the copy shortcut."},
+  {subject:"ICT", q:"Which one is a web browser?", options:["MS Word","Google Chrome","PowerPoint","Excel"], answer:1, explanation:"Google Chrome is a browser."},
+  {subject:"ICT", q:"WWW stands for:", options:["World Wide Web","Web World Wide","World Web Window","Wide World Web"], answer:0, explanation:"WWW expands to World Wide Web."}
+];
+
+const defaultData = {
+  routine: defaultRoutine,
+  tasks: [],
+  studyLogs: [],
+  mockLogs: [],
+  habits: {},
+  journals: {},
+  mcqHistory: [],
+  loadedDates: {}
+};
+let data = JSON.parse(localStorage.getItem(storeKey) || "null") || defaultData;
+let currentQuiz = [];
+
+function save(){ localStorage.setItem(storeKey, JSON.stringify(data)); render(); }
+function getPlanForDate(date=todayKey()){ return PLAN.find(p=>p.date===date) || PLAN[PLAN.length-1]; }
+function daysLeft(){
+  const diff = EXAM_DATE - new Date();
+  return Math.max(0, Math.ceil(diff/(1000*60*60*24)));
+}
+function showTab(id, btn){
+  document.querySelectorAll(".tabPanel").forEach(el => el.style.display="none");
+  document.getElementById(id).style.display="block";
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function mobileTab(id, btn){
+  showTab(id, document.querySelector(`.tabs .tab[onclick*="'${id}'"]`));
+  document.querySelectorAll(".bottomNav button").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+}
+function showSubtab(id, btn, groupClass){
+  document.querySelectorAll("."+groupClass).forEach(el => el.style.display="none");
+  document.getElementById(id).style.display="block";
+  btn.parentElement.querySelectorAll(".subtab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+}
+function saveRoutine(){
+  data.routine = {
+    running: document.getElementById("runTime").value.trim() || defaultRoutine.running,
+    session1: document.getElementById("morningTime").value.trim() || defaultRoutine.session1,
+    session2: document.getElementById("middayTime").value.trim() || defaultRoutine.session2,
+    session3: document.getElementById("afternoonTime").value.trim() || defaultRoutine.session3,
+    session4: document.getElementById("eveningTime").value.trim() || defaultRoutine.session4,
+    night: document.getElementById("nightTime").value.trim() || defaultRoutine.night,
+  };
+  save();
+  alert("Routine updated.");
+}
+function resetRoutine(){
+  data.routine = JSON.parse(JSON.stringify(defaultRoutine));
+  save();
+}
+function guessSubject(task){
+  const t = task.toLowerCase();
+  if(t.includes("reasoning") || t.includes("analogy") || t.includes("series") || t.includes("syllogism") || t.includes("blood")) return "Reasoning";
+  if(t.includes("gk") || t.includes("current") || t.includes("awards") || t.includes("appointments") || t.includes("sports") || t.includes("economy")) return "GK/Current Affairs";
+  if(t.includes("punjab") || t.includes("sikh") || t.includes("history") || t.includes("rulers") || t.includes("amritsar")) return "Punjab History";
+  if(t.includes("punjabi") || t.includes("guru") || t.includes("muhavare") || t.includes("ਅ")) return "Punjabi";
+  if(t.includes("english") || t.includes("article") || t.includes("voice") || t.includes("grammar")) return "English";
+  if(t.includes("ict") || t.includes("computer") || t.includes("excel") || t.includes("word")) return "ICT";
+  return "Revision";
+}
+function loadTodayTasks(){
+  const date = todayKey();
+  const plan = getPlanForDate(date);
+  const existing = data.tasks.filter(t=>t.date===date).map(t=>t.title.toLowerCase());
+  plan.tasks.forEach(task => {
+    if(!existing.includes(task.toLowerCase())){
+      data.tasks.push({
+        id: crypto.randomUUID(),
+        date,
+        title: task,
+        subject: guessSubject(task),
+        done:false,
+        fromPlan:true
+      });
+    }
+  });
+  data.loadedDates[date] = true;
+  save();
+}
+function addCustomTaskPrompt(){
+  const t = prompt("Enter your custom task:");
+  if(!t) return;
+  data.tasks.unshift({id: crypto.randomUUID(), date: todayKey(), title: t, subject: guessSubject(t), done:false, fromPlan:false});
+  save();
+}
+function toggleTask(id){
+  const task = data.tasks.find(t=>t.id===id);
+  if(task){ task.done = !task.done; save(); }
+}
+function deleteTask(id){
+  data.tasks = data.tasks.filter(t=>t.id!==id);
+  save();
+}
+function addStudyLog(){
+  const subject = document.getElementById("studySubject").value;
+  const hours = parseFloat(document.getElementById("studyHoursInput").value || 0);
+  const mcqs = parseInt(document.getElementById("studyMcqsInput").value || 0);
+  const notes = document.getElementById("studyNotes").value.trim();
+  if(hours<=0 && mcqs<=0 && !notes) return alert("Add some study details first.");
+  data.studyLogs.unshift({
+    id: crypto.randomUUID(),
+    date: todayKey(),
+    time: new Date().toLocaleTimeString(),
+    subject, hours, mcqs, notes
+  });
+  document.getElementById("studyHoursInput").value = "";
+  document.getElementById("studyMcqsInput").value = "";
+  document.getElementById("studyNotes").value = "";
+  save();
+}
+function deleteStudy(id){
+  data.studyLogs = data.studyLogs.filter(x=>x.id!==id);
+  save();
+}
+function addMock(){
+  const name = document.getElementById("mockName").value.trim() || "Mock Test";
+  const score = parseFloat(document.getElementById("mockScore").value || 0);
+  const wrong = parseInt(document.getElementById("mockWrong").value || 0);
+  const notes = document.getElementById("mockNotes").value.trim();
+  if(score<=0) return alert("Please enter a mock score.");
+  data.mockLogs.unshift({
+    id: crypto.randomUUID(),
+    date: todayKey(),
+    name, score, wrong, notes
+  });
+  document.getElementById("mockName").value = "";
+  document.getElementById("mockScore").value = "";
+  document.getElementById("mockWrong").value = "";
+  document.getElementById("mockNotes").value = "";
+  save();
+}
+function deleteMock(id){
+  data.mockLogs = data.mockLogs.filter(x=>x.id!==id);
+  save();
+}
+function toggleHabit(name){
+  const k = todayKey();
+  data.habits[k] = data.habits[k] || {};
+  data.habits[k][name] = !data.habits[k][name];
+  save();
+}
+function saveJournal(){
+  data.journals[todayKey()] = document.getElementById("journal").value;
+  save();
+  alert("Journal saved.");
+}
+function dailySeed(){
+  return todayKey().replaceAll("-","");
+}
+function seededRandom(seed){
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+function pickDailyQuestions(subject="mixed"){
+  let pool = subject === "mixed" ? MCQ_BANK : MCQ_BANK.filter(x=>x.subject===subject);
+  if(pool.length < 10) pool = MCQ_BANK;
+  const used = new Set();
+  const selected = [];
+  let seed = parseInt(dailySeed(),10) + (subject==="mixed"?0:subject.length*19);
+  while(selected.length < 10 && used.size < pool.length){
+    const idx = Math.floor(seededRandom(seed + selected.length*7) * pool.length);
+    if(!used.has(idx)){
+      used.add(idx);
+      selected.push({...pool[idx], id: crypto.randomUUID()});
+    }
+    seed += 11;
+  }
+  return selected;
+}
+function startQuiz(){
+  const subject = document.getElementById("mcqSubject").value;
+  currentQuiz = pickDailyQuestions(subject).map(q=>({...q, selected:null}));
+  renderQuiz(subject);
+}
+function selectOption(qid, index){
+  const q = currentQuiz.find(x=>x.id===qid);
+  if(!q) return;
+  q.selected = index;
+  renderQuiz(document.getElementById("mcqSubject").value);
+}
+function submitQuiz(){
+  if(!currentQuiz.length) return;
+  let score = 0;
+  currentQuiz.forEach(q => { if(q.selected === q.answer) score++; });
+  const accuracy = Math.round((score/currentQuiz.length)*100);
+  data.mcqHistory.unshift({
+    id: crypto.randomUUID(),
+    date: todayKey(),
+    subject: document.getElementById("mcqSubject").value,
+    total: currentQuiz.length,
+    correct: score,
+    accuracy
+  });
+  save();
+  const res = document.getElementById("quizResult");
+  res.style.display = "block";
+  res.innerHTML = `<div class="itemTitle">You scored ${score}/${currentQuiz.length} • ${accuracy}%</div>
+  <div class="itemMeta">Review the correct answers below. Practice again later if needed.</div>`;
+  renderQuiz(document.getElementById("mcqSubject").value, true);
+}
+function renderQuiz(subject, showAnswer=false){
+  document.getElementById("quizHeader").textContent = currentQuiz.length ? `Today's ${subject==="mixed"?"Mixed":subject} MCQ Set` : 'Tap “Generate Today’s MCQs” to start.';
+  document.getElementById("quizProgress").textContent = currentQuiz.length ? `${currentQuiz.length} questions • generated for today` : '';
+  document.getElementById("quizActions").style.display = currentQuiz.length ? "flex" : "none";
+  document.getElementById("quizResult").style.display = "none";
+  const area = document.getElementById("quizArea");
+  if(!currentQuiz.length){
+    area.innerHTML = "";
+    return;
+  }
+  area.innerHTML = currentQuiz.map((q,qi)=>`
+    <div class="item" style="margin-bottom:12px">
+      <div class="questionNo">Question ${qi+1} • ${q.subject}</div>
+      <div class="itemTitle">${escapeHtml(q.q)}</div>
+      <div style="height:10px"></div>
+      ${q.options.map((opt,idx)=>{
+        let cls = "mcqOption";
+        if(q.selected===idx) cls += " selected";
+        if(showAnswer && idx===q.answer) cls += " correct";
+        if(showAnswer && q.selected===idx && q.selected!==q.answer) cls += " wrong";
+        return `<div class="${cls}" onclick="${showAnswer?'void(0)':`selectOption('${q.id}', ${idx})`}">${String.fromCharCode(65+idx)}. ${escapeHtml(opt)}</div>`;
+      }).join('<div style="height:8px"></div>')}
+      ${showAnswer?`<div class="itemMeta" style="margin-top:10px"><b>Explanation:</b> ${escapeHtml(q.explanation)}</div>`:''}
+    </div>
+  `).join("");
+}
+function exportData(){
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "cracktrack-lux-backup.json";
+  a.click();
+}
+function importData(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=> {
+    try{
+      data = JSON.parse(reader.result);
+      save();
+      alert("Backup imported.");
+    }catch(err){
+      alert("Invalid backup file.");
+    }
+  };
+  reader.readAsText(file);
+}
+function resetAll(){
+  if(confirm("This will delete all saved app data from this device. Continue?")){
+    data = JSON.parse(JSON.stringify(defaultData));
+    localStorage.setItem(storeKey, JSON.stringify(data));
+    save();
+  }
+}
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function render(){
+  const today = todayKey();
+  const plan = getPlanForDate(today);
+  const todaysTasks = data.tasks.filter(t=>t.date===today);
+  const done = todaysTasks.filter(t=>t.done).length;
+  const todayHours = data.studyLogs.filter(x=>x.date===today).reduce((a,b)=>a+(Number(b.hours)||0),0);
+  const mockAvg = data.mockLogs.length ? Math.round(data.mockLogs.reduce((a,b)=>a+Number(b.score),0)/data.mockLogs.length) : 0;
+  const mcqAcc = data.mcqHistory.length ? Math.round(data.mcqHistory.reduce((a,b)=>a+Number(b.accuracy),0)/data.mcqHistory.length) : 0;
+  const habitsToday = data.habits[today] || {};
+  const habitDone = habitNames.filter(h=>habitsToday[h]).length;
+  const dayProgress = Math.min(100, Math.round(((done/Math.max(1,todaysTasks.length))*45) + ((Math.min(todayHours,9)/9)*35) + ((habitDone/Math.max(1,habitNames.length))*20)));
+
+  document.getElementById("countdownBadge").textContent = `⏳ ${daysLeft()} days left`;
+  document.getElementById("todayHours").textContent = `${todayHours.toFixed(todayHours%1?1:0)}h`;
+  document.getElementById("tasksDone").textContent = `${done}/${todaysTasks.length}`;
+  document.getElementById("mcqAccuracy").textContent = `${mcqAcc}%`;
+  document.getElementById("mockAvg").textContent = `${mockAvg}%`;
+
+  document.getElementById("phaseTag").textContent = `${plan.phase}`;
+  document.getElementById("currentPhaseMini").textContent = plan.phase;
+  document.getElementById("focusText").textContent = plan.brief + " Execute the 9–5 study window with deep focus, then use 9–10 PM for clean revision.";
+  document.getElementById("dayProgress").style.width = dayProgress + "%";
+  document.getElementById("progressText").textContent = `Today execution score: ${dayProgress}% • Goal: complete your scheduled blocks and at least one MCQ set.`;
+
+  document.getElementById("routineLine1").textContent = data.routine.running;
+  document.getElementById("routineLine2").textContent = data.routine.session1;
+  document.getElementById("routineLine3").textContent = data.routine.session2 + " • " + data.routine.session3;
+  document.getElementById("routineLine4").textContent = data.routine.session4 + " • " + data.routine.night;
+
+  document.getElementById("runTime").value = data.routine.running;
+  document.getElementById("morningTime").value = data.routine.session1;
+  document.getElementById("middayTime").value = data.routine.session2;
+  document.getElementById("afternoonTime").value = data.routine.session3;
+  document.getElementById("eveningTime").value = data.routine.session4;
+  document.getElementById("nightTime").value = data.routine.night;
+
+  document.getElementById("routinePreview").innerHTML = [
+    data.routine.running, data.routine.session1, data.routine.session2,
+    data.routine.session3, data.routine.session4, data.routine.night
+  ].map(x=>`<li>${escapeHtml(x)}</li>`).join("");
+
+  document.getElementById("todayTitleTag").textContent = `${plan.date} • ${plan.title}`;
+  document.getElementById("todayBrief").textContent = `Today’s plan is based on your personalized routine: run from 5–7 AM, study from 9 AM–5 PM, and revise from 9–10 PM.`;
+
+  document.getElementById("taskList").innerHTML = todaysTasks.length ? todaysTasks.map(t=>`
+    <div class="item">
+      <div class="itemTop">
+        <div>
+          <div class="itemTitle">${t.done?'✅':'⬜'} ${escapeHtml(t.title)}</div>
+          <div class="itemMeta">${t.subject} • ${t.fromPlan?'From your personalized plan':'Custom task'}</div>
+        </div>
+        <span class="tag ${t.done?'green':'gold'}">${t.done?'Done':'Pending'}</span>
+      </div>
+      <div class="actions">
+        <button class="secondary" onclick="toggleTask('${t.id}')">${t.done?'Mark Pending':'Mark Done'}</button>
+        <button class="danger" onclick="deleteTask('${t.id}')">Delete</button>
+      </div>
+    </div>
+  `).join("") : `<div class="item"><div class="itemTitle">No tasks loaded yet.</div><div class="itemMeta">Tap “Load / Refresh Today’s Tasks” to add today’s tasks automatically.</div></div>`;
+
+  document.getElementById("scheduleList").innerHTML = PLAN.map(p=>`
+    <div class="item" style="${p.date===today?'border-color:rgba(231,193,110,.48);background:rgba(231,193,110,.07)':''}">
+      <div class="itemTop">
+        <div>
+          <div class="itemTitle">${p.date===today?'⭐ Today • ':''}${escapeHtml(p.date)} — ${escapeHtml(p.title)}</div>
+          <div class="itemMeta">${escapeHtml(p.phase)} • ${escapeHtml(p.brief)}</div>
+        </div>
+        <span class="tag">${p.tasks.length} tasks</span>
+      </div>
+      <ul>${p.tasks.map(t=>`<li>${escapeHtml(t)}</li>`).join("")}</ul>
+    </div>
+  `).join("");
+
+  document.getElementById("studyList").innerHTML = data.studyLogs.length ? data.studyLogs.slice(0,40).map(s=>`
+    <div class="item">
+      <div class="itemTop">
+        <div>
+          <div class="itemTitle">${escapeHtml(s.subject)} — ${s.hours||0}h • ${s.mcqs||0} MCQs</div>
+          <div class="itemMeta">${escapeHtml(s.date)} • ${escapeHtml(s.time || '')}</div>
+        </div>
+        <span class="tag">${s.subject}</span>
+      </div>
+      <div class="itemMeta">${escapeHtml(s.notes||'')}</div>
+      <div class="actions"><button class="danger" onclick="deleteStudy('${s.id}')">Delete</button></div>
+    </div>
+  `).join("") : `<div class="item"><div class="itemTitle">No study logs yet.</div></div>`;
+
+  document.getElementById("mockList").innerHTML = data.mockLogs.length ? data.mockLogs.slice(0,40).map(m=>`
+    <div class="item">
+      <div class="itemTop">
+        <div>
+          <div class="itemTitle">${escapeHtml(m.name)} — ${m.score}/100</div>
+          <div class="itemMeta">${escapeHtml(m.date)} • Wrong: ${m.wrong||0}</div>
+        </div>
+        <span class="tag ${m.score>=75?'green':m.score>=60?'gold':'red'}">${m.score>=75?'Strong':m.score>=60?'Improve':'Weak'}</span>
+      </div>
+      <div class="progressWrap"><div class="progress" style="width:${Math.min(100,m.score)}%"></div></div>
+      <div class="itemMeta">${escapeHtml(m.notes||'')}</div>
+      <div class="actions"><button class="danger" onclick="deleteMock('${m.id}')">Delete</button></div>
+    </div>
+  `).join("") : `<div class="item"><div class="itemTitle">No mock logs yet.</div></div>`;
+
+  document.getElementById("habitGrid").innerHTML = habitNames.map(h=>`
+    <div class="item" style="padding:12px;cursor:pointer;background:${habitsToday[h]?'rgba(34,197,94,.14)':'rgba(255,255,255,.03)'}" onclick="toggleHabit('${h}')">
+      <div class="itemTitle" style="font-size:14px">${habitsToday[h]?'✅':'⬜'} ${escapeHtml(h)}</div>
+      <div class="itemMeta">${habitsToday[h]?'Completed today':'Tap to toggle'}</div>
+    </div>
+  `).join("");
+  document.getElementById("journal").value = data.journals[today] || "";
+}
+render();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
